@@ -1,0 +1,14 @@
+{block content}
+<h3 class="title mt-4 p-2 bg-success text-light rounded">{$article->title}</h3>
+    <div class="card">
+        
+        {if $article->has_picture}
+            <img class="card-img-top" src="{$basePath}/images/cms/{$article->id}.png?{time()}" alt="{$article->title}" style="width: 100%;">
+        {/if}
+        
+    </div>
+{/block}
+
+{block scripts}
+    {include parent}
+{/block}

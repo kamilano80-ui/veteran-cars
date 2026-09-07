@@ -1,0 +1,66 @@
+parameters:
+	contactEmail: 'admin@localhost.cz'
+
+application:
+	errorPresenter:
+		4xx: Error:Error4xx
+		5xx: Error:Error5xx
+	mapping: App\Presentation\*\**Presenter
+
+
+database:
+	dsn: 'mysql:host=127.0.0.1;dbname=veteran_car'
+	user: root
+	password: ''
+
+# Register Nittro Latte macros
+latte:
+	strictTypes: yes
+	strictParsing: yes
+	extensions:
+		- App\Presentation\Accessory\LatteExtension
+	macros:
+		- Nittro\Bridges\NittroLatte\NittroMacros
+
+
+di:
+	export:
+		parameters: no
+		tags: no
+
+security:
+	roles:
+		guest:
+		member: [guest]
+		admin:
+
+services:
+	- App\Forms\FormFactory
+	- App\Forms\SignInFormFactory
+	- App\Forms\SignUpFormFactory
+	- App\Model\ArticleManager(picturePath: "%wwwDir%/images/articles")
+	- App\Model\CategoryManager
+	- App\Model\CommentManager
+	- App\Model\ContactManager
+	- App\Model\CmsManager(picturePath: "%wwwDir%/images/cms")
+	- App\Presentation\Front\Contact\ContactPresenter(%contactEmail%)
+	router: App\Core\RouterFactory::createRouter
+	authenticator: App\Model\UserManager
+	security.authorizator:
+		setup:
+		- addResource(Error)
+		- addResource(Admin:Dashboard)
+		- addResource(Admin:Sign)
+		- addResource(Admin:Category)
+		- addResource(Admin:Article)
+		- addResource(Admin:User)
+		- addResource(Admin:Comment)
+		- addResource(Admin:Cms)
+		- addResource(Admin:Setting)
+		- allow(admin)
+		- allow(guest, Error)
+		- allow(guest, Admin:Sign)
+		- allow(member, Admin:Dashboard, default)
+		- allow(member, Admin:Sign, out)
+		- allow(member, Admin:Comment)
+		- allow(member, Admin:Article)

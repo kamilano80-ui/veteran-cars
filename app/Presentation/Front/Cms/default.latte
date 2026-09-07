@@ -1,0 +1,19 @@
+{block content}
+{*    
+<h1 class="my-4">{$page->title}</h1>
+*}
+
+    <!-- Blog Post -->
+    <h2 class="title mt-4 p-2 bg-success text-light rounded">{$page->title}</h2>
+    <div class="card mb-4">
+        {if $page->has_picture}
+        <img class="card-img-top mt-3" src="{$basePath}/images/cms/{$page->id}.png?{time()}" alt="{$page->title}" style="width: 50%;">
+        {/if}
+        <div class="card-body">
+            
+            <p class="card-text">{$page->description|noescape}</p>
+        </div>
+        <div class="card-footer text-muted">
+            Publikováno: {$page->date_add|date:'j. n. Y H:i'}
+        </div>
+    </div>
