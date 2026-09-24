@@ -47,12 +47,12 @@
             </div>
         </div>
     </nav>
+                    
     <div class=container>
-
         <div class="row">
             <div class="col-lg-3" n:snippet="header" n:inner-block="header">
-                <span class="btn btn-primary my-4">Automobily</span>
-                <div class="list-group">
+                
+                <div class="list-group mt-5">
                     <a n:foreach="$categories as $category" href="{plink :Front:Article: $category->url}" data-path="{$category->url}" n:class="list-group-item, $presenter->isLinkCurrent() ? active">{$category->name}</a>
                 </div>
                 <div>
